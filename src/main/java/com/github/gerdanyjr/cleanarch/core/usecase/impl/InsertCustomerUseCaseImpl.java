@@ -5,7 +5,9 @@ import com.github.gerdanyjr.cleanarch.core.dataprovider.InsertCustomer;
 import com.github.gerdanyjr.cleanarch.core.domain.Address;
 import com.github.gerdanyjr.cleanarch.core.domain.Customer;
 import com.github.gerdanyjr.cleanarch.core.usecase.InsertCustomerUseCase;
+import org.springframework.stereotype.Component;
 
+@Component
 public class InsertCustomerUseCaseImpl implements InsertCustomerUseCase {
 
     private final FindAddressByZipCode findAddressByZipCode;
@@ -23,7 +25,7 @@ public class InsertCustomerUseCaseImpl implements InsertCustomerUseCase {
     public void insert(Customer customer, String zipcode) {
         Address address = findAddressByZipCode.find(zipcode);
         customer.setAddress(address);
-
+        insertCustomer.insert(customer);
     }
 
 }
