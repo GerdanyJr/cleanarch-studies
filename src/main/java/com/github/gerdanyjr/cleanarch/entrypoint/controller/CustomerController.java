@@ -1,6 +1,8 @@
 package com.github.gerdanyjr.cleanarch.entrypoint.controller;
 
+import com.github.gerdanyjr.cleanarch.core.dataprovider.DeleteCustomerById;
 import com.github.gerdanyjr.cleanarch.core.domain.Customer;
+import com.github.gerdanyjr.cleanarch.core.usecase.DeleteCustomerByIdUseCase;
 import com.github.gerdanyjr.cleanarch.core.usecase.FindCustomerByIdUseCase;
 import com.github.gerdanyjr.cleanarch.core.usecase.InsertCustomerUseCase;
 import com.github.gerdanyjr.cleanarch.core.usecase.UpdateCustomerUseCase;
@@ -19,17 +21,20 @@ public class CustomerController {
     private final InsertCustomerUseCase insertCustomerUseCase;
     private final FindCustomerByIdUseCase findCustomerByIdUseCase;
     private final UpdateCustomerUseCase updateCustomerUseCase;
+    private final DeleteCustomerByIdUseCase deleteCustomerByIdUseCase;
 
     public CustomerController(
             InsertCustomerUseCase insertCustomerUseCase,
             CustomerMapper customerMapper,
             FindCustomerByIdUseCase findCustomerByIdUseCase,
-            UpdateCustomerUseCase updateCustomerUseCase
+            UpdateCustomerUseCase updateCustomerUseCase,
+            DeleteCustomerByIdUseCase deleteCustomerByIdUseCase
     ) {
         this.insertCustomerUseCase = insertCustomerUseCase;
         this.customerMapper = customerMapper;
         this.findCustomerByIdUseCase = findCustomerByIdUseCase;
         this.updateCustomerUseCase = updateCustomerUseCase;
+        this.deleteCustomerByIdUseCase = deleteCustomerByIdUseCase;
     }
 
     @PostMapping
@@ -59,6 +64,12 @@ public class CustomerController {
         customer.setId(id);
 
         updateCustomerUseCase.update(customer, customerRequest.getZipcode());
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        deleteCustomerByIdUseCase.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
