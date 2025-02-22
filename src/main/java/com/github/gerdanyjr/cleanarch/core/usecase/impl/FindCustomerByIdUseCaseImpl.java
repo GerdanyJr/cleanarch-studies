@@ -3,9 +3,7 @@ package com.github.gerdanyjr.cleanarch.core.usecase.impl;
 import com.github.gerdanyjr.cleanarch.core.dataprovider.FindCustomerById;
 import com.github.gerdanyjr.cleanarch.core.domain.Customer;
 import com.github.gerdanyjr.cleanarch.core.usecase.FindCustomerByIdUseCase;
-import org.springframework.stereotype.Component;
 
-@Component
 public class FindCustomerByIdUseCaseImpl implements FindCustomerByIdUseCase {
     private final FindCustomerById findCustomerById;
 
